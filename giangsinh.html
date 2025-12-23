@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Lời nhắn mùa đông ❄️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #1e3c72; /* FIX LỖI NỀN TRẮNG */
+  background-image: linear-gradient(to bottom, #1e3c72, #2a5298);
+  color: white;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* ===== TUYẾT ===== */
+.snow {
+  position: fixed;
+  top: -10px;
+  color: white;
+  font-size: 14px;
+  animation: fall linear infinite;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+/* ===== TRANG ===== */
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.page.active {
+  display: flex;
+}
+
+.card {
+  background: rgba(255,255,255,0.15);
+  padding: 25px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 420px;
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 25px;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  background: #ffd700;
+}
+
+.small {
+  margin-top: 10px;
+  font-size: 14px;
+  opacity: 0.8;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body onclick="playMusic()">
+
+<!-- 🎵 NHẠC NỀN (nhẹ) -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/12/09/audio_8f0b9f4d2c.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ===== TRANG 1 ===== -->
+<div class="page active" id="p1">
+  <div class="card">
+    <p>
+      Mặc dù qua giáng sinh rồi mình chúc hơi muộn  
+      b thông cảm cho mình nha 😁
+    </p>
+    <button onclick="next(1)">Tiếp ➡️</button>
+  </div>
+</div>
+
+<!-- ===== TRANG 2 ===== -->
+<div class="page" id="p2">
+  <div class="card">
+    <p>
+      Mùa đông này chỗ mình lạnh lắm  
+      mình không còn thấy ấm nữa rồi,  
+      mình không biết chỗ bạn sao  
+      nhưng bạn phải giữ gìn sức khoẻ cho thật tốt nhe ❤️
+    </p>
+    <button onclick="next(2)">Tiếp ➡️</button>
+    <div class="small" onclick="back(2)">⬅ Quay lại</div>
+  </div>
+</div>
+
+<!-- ===== TRANG 3 ===== -->
+<div class="page" id="p3">
+  <div class="card">
+    <p>
+      Vài ngày qua mình làm hoa bằng giấy  
+      một phần để gửi cho bạn  
+      mình lại có động lực hơn  
+      và mình làm cũng quên đi nỗi buồn cô đơn  
+      không còn bạn ở bên nữa 😔
+    </p>
+    <button onclick="next(3)">Tiếp ➡️</button>
+    <div class="small" onclick="back(3)">⬅ Quay lại</div>
+  </div>
+</div>
+
+<!-- ===== TRANG 4 ===== -->
+<div class="page" id="p4">
+  <div class="card">
+    <p>
+      Nếu bạn thích những đoá hoa đó  
+      mình có thể làm nhiều hơn,  
+      mình chỉ làm và tặng riêng cho một mình bạn thôi  
+      vì dù có sao đi nữa  
+      bạn vẫn là kho báu quý giá nhất của mình ❤️
+    </p>
+    <button onclick="next(4)">Tiếp ➡️</button>
+    <div class="small" onclick="back(4)">⬅ Quay lại</div>
+  </div>
+</div>
+
+<!-- ===== TRANG 5 ===== -->
+<div class="page" id="p5">
+  <div class="card">
+    <p>
+      Mình chúc bạn sẽ có 1 mùa đông  
+      và mùa xuân vui vẻ, thi thật tốt.  
+      Mình mong mọi điều buồn sẽ qua  
+      và nụ cười sẽ luôn ở bên bạn ^^  
+      <br><br>
+      Tạm biệt Hải Như iu dấu nha 🩷
+    </p>
+    <button onclick="back(5)">⬅ Quay lại</button>
+  </div>
+</div>
+
+<script>
+/* ===== CHUYỂN TRANG ===== */
+function next(n) {
+  document.getElementById("p" + n).classList.remove("active");
+  document.getElementById("p" + (n + 1)).classList.add("active");
+}
+
+function back(n) {
+  document.getElementById("p" + n).classList.remove("active");
+  document.getElementById("p" + (n - 1)).classList.add("active");
+}
+
+/* ===== TUYẾT RƠI ===== */
+function createSnow() {
+  const snow = document.createElement("div");
+  snow.className = "snow";
+  snow.innerHTML = "❄";
+  snow.style.left = Math.random() * window.innerWidth + "px";
+  snow.style.animationDuration = (3 + Math.random() * 5) + "s";
+  snow.style.opacity = Math.random();
+  snow.style.fontSize = (10 + Math.random() * 20) + "px";
+  document.body.appendChild(snow);
+
+  setTimeout(() => {
+    snow.remove();
+  }, 8000);
+}
+
+setInterval(createSnow, 200);
+
+/* ===== NHẠC ===== */
+let started = false;
+function playMusic() {
+  if (!started) {
+    document.getElementById("music").play();
+    started = true;
+  }
+}
+</script>
+
+</body>
+</html>
